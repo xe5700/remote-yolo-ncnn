@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM  docker.1ms.run/ultralytics/ultralytics:latest-arm64
+FROM --platform=arm64  docker.1ms.run/ultralytics/ultralytics:latest-arm64
 RUN sed -i 's@//ports.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources && pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
 #禁用apt-get交互
 ENV DEBIAN_FRONTEND=noninteractive
