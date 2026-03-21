@@ -1,0 +1,7 @@
+[config]
+device = "cpu"
+server_port = 8080
+
+[model]
+model_name = "YOLO26n_384"
+model_path = "models/yolo26n_ncnn_model_384"
