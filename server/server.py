@@ -460,6 +460,8 @@ def main():
     #屏蔽网页日志
     log = logging.getLogger('werkzeug')
     log.setLevel(logging.ERROR)
+    log = logging.getLogger('ultralytics')
+    log.setLevel(logging.ERROR)
     model = YOLO(config.model_path, task="detect")
     app.run(host="0.0.0.0", port=config.server_port, debug=False, threaded=False)
 
