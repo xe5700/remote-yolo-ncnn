@@ -4,8 +4,6 @@ CodeProject.AI Server - 空壳实现
 基于Flask的AI检测API服务器
 """
 
-import json
-import math
 import sys
 import traceback
 
@@ -443,12 +441,13 @@ def main():
     global config,model
     # 检测配置是否存在
     config = Config()
-    if os.path.exists("config.toml"):
-        config.load("config.toml")
+    cfg_path=os.path.join("config","config.toml")
+    if os.path.exists():
+        config.load(cfg_path)
         print(f"Loaded configuration from config.toml: {config}")
     else:
+        config.save(cfg_path)
         print(f"No configuration file found. Using default configuration: {config}")
-        config.save("config.toml")
     print("=" * 60)
     print("CodeProject.AI Server - Mock Implementation")
     print("=" * 60)
