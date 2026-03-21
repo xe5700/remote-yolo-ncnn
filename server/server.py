@@ -265,7 +265,7 @@ def object_detection():
             img = Image.open(file.stream)
             predict_files.append(img)
 
-        data = model.predict(predict_files[0], device=config.device, conf=min_confidence, save=False)
+        data = model(predict_files[0], device=config.device, conf=min_confidence, save=False, verbose=False)
         # 获取推理时间
         # inference_time = out[0]["speed"]["inference"]
         # # 模拟推理时间 (实际应用中这里会调用YOLO模型)
@@ -462,7 +462,7 @@ def main():
     log.setLevel(logging.ERROR)
     log = logging.getLogger('ultralytics')
     log.setLevel(logging.ERROR)
-    model = YOLO(config.model_path, task="detect")
+    model = YOLO(config.model_path, task="detect", verbose=False)
     app.run(host="0.0.0.0", port=config.server_port, debug=False, threaded=False)
 
 
