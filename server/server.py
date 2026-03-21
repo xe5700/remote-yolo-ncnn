@@ -4,6 +4,7 @@ CodeProject.AI Server - 空壳实现
 基于Flask的AI检测API服务器
 """
 
+import logging
 import sys
 import traceback
 
@@ -264,7 +265,7 @@ def object_detection():
             img = Image.open(file.stream)
             predict_files.append(img)
 
-        data = model.predict(predict_files[0], device=config.device, conf=min_confidence)
+        data = model.predict(predict_files[0], device=config.device, conf=min_confidence, save=False)
         # 获取推理时间
         # inference_time = out[0]["speed"]["inference"]
         # # 模拟推理时间 (实际应用中这里会调用YOLO模型)
@@ -442,7 +443,7 @@ def main():
     # 检测配置是否存在
     config = Config()
     cfg_path=os.path.join("config","config.toml")
-    if os.path.exists():
+    if os.path.exists(cfg_path):
         config.load(cfg_path)
         print(f"Loaded configuration from config.toml: {config}")
     else:
@@ -454,11 +455,12 @@ def main():
     print(f"Module ID: {MODULE_ID}")
     print(f"Module Name: {MODULE_NAME}")
     print(f"Version: {VERSION}")
-    print(f"Server: http://localhost:32168")
+    print(f"Server: http://localhost:{config.server_port}")
     print("=" * 60)
+    #屏蔽网页日志
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
     model = YOLO(config.model_path, task="detect")
-    # out=model.predict(list("./models/bus.jpg","n01440764_tench.JPEG"), device="vulkan:0", save=False)
-    # 在容器环境中运行时，监听所有网络接口
     app.run(host="0.0.0.0", port=config.server_port, debug=False, threaded=False)
 
 

@@ -19,7 +19,7 @@ EOF
 
 RUN <<EOF
 echo 适配postmarketos等基于musl的发行版的驱动目录结构
-ln -s /usr/lib/aarch64-linux-gnu/libvulkan_freedreno.so /usr/lib
+# ln -s /usr/lib/aarch64-linux-gnu/libvulkan_freedreno.so /usr/lib
 ln -s /usr/lib/aarch64-linux-gnu/libvulkan_*.so /usr/lib
 EOF
 
