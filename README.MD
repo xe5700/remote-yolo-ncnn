@@ -19,7 +19,7 @@
 
 - 🚀 **高性能推理** - 基于 NCNN 框架，支持 Vulkan GPU 加速
 - 🎯 **YOLO26n 模型** - 轻量级高精度目标检测模型
-- 🔌 **Frigate 兼容** - 完美适配 Frigate NVR 的 MQTT 检测接口
+- 🔌 **Frigate 兼容** - 完美适配 Frigate NVR 的 CodeProject.AI 接口
 - 🐳 **容器化部署** - 提供完整的 Docker 镜像和构建脚本
 - ⚙️ **灵活配置** - 支持 CPU/Vulkan 设备切换，端口自定义
 - 📊 **标准 API** - CodeProject.AI 兼容接口，易于集成

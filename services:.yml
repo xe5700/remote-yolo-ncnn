@@ -1,0 +1,39 @@
+services:
+  frigate:
+    restart: unless-stopped
+    stop_grace_period: 30s
+    image: ghcr.1ms.run/blakeblackshear/frigate:stable
+    shm_size: "256mb"
+    devices:
+      - /dev/video12:/dev/video12
+    volumes:
+      - /srv/cctv/frigate/config:/config
+      - /srv/cctv/frigate/storage:/media/frigate
+      - type: tmpfs # 1GB In-memory filesystem for recording segment storage
+        target: /tmp/cache
+        tmpfs:
+          size: 512000000
+    ports:
+      - "8971:8971"
+      - "8554:8554" # RTSP feeds
+    environment:
+      TZ: "Asia/Shanghai" # 设置为中国+8时区
+      HF_ENDPOINT: "https://huggingface.mirror.frigate-cn.video" # 由我们提供的Huggingface国内镜像源，提供Frigate需要用到的部分模型加速下载
+      GITHUB_ENDPOINT: "https://github.mirror.frigate-cn.video" # 由我们提供的GitHub国内镜像源，提供Frigate需要用到的部分模型加速下载
+      TF_KERAS_MOBILENET_V2_WEIGHTS_URL: https://cnb.cool/frigate-cn/mirrors/storage.googleapis/-/git/raw/main/tensorflow/keras-applications/mobilenet_v2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.35_224_no_top.h5 # 分类模型需要的权重文件
+  ultralytics_server:
+    image: xe5700/ultralytics_ncnn_vulkan_server
+    devices:
+      # 对应 --device /dev/dri/renderD128
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    volumes:
+      # 对应 -v /usr/share/vulkan/icd.d/freedreno_icd.aarch64.json:...
+      - /usr/share/vulkan/icd.d/freedreno_icd.aarch64.json:/usr/share/vulkan/icd.d/freedreno_icd.aarch64.json
+      # 对应 -v $(pwd)/config:/server/config
+      # 假设此文件在当前目录下的 config 文件夹
+      - /srv/cctv/ultralytics_server/config:/server/config
+      
+    
+    environment:
+      # 对应 -e VK_ICD_FILENAMES=...
+      - VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/freedreno_icd.aarch64.json

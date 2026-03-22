@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CodeProject.AI Server - 空壳实现
+CodeProject.AI Server - NCNN框架+
 基于Flask的AI检测API服务器
 """
 
