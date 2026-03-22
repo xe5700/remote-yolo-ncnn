@@ -1,7 +1,0 @@
-[config]
-device="vulkan:0"
-server_port=8080
-[model]
-model_name="YOLO26n_384"
-#可选fp16 int8 量化模型
-model_path="models/yolo26n_ncnn_model_384"

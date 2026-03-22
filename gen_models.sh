@@ -27,6 +27,7 @@ function gen_int8_model() {
     # echo "开始生成int8模型完成"
     # gen_int8_model_done=1
 }
+mkdir -p models
 cd models
 yolo export model=yolo26n.pt format=ncnn
 mv_model yolo26n_ncnn_model yolo26n_ncnn_model_default
